@@ -1,10 +1,11 @@
-
 package io.github.CalgaryCommunityTeams.y2015.robotCode;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.RobotDrive.MotorType;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -17,47 +18,63 @@ public class Robot extends IterativeRobot {
 	RobotDrive myRobot;
 	Joystick stick;
 	int autoLoopCounter;
-    /**
-     * This function is run when the robot is first started up and should be
-     * used for any initialization code.
-     */
-    public void robotInit() {
-    	myRobot = new RobotDrive(0,1);
-    	stick = new Joystick(0);
-    }
+	boolean tank;
 
-    /**
-     * This function is run once each time the robot enters autonomous mode
-     */
-    public void autonomousInit() {
-    	autoLoopCounter = 0;
-    }
+	/**
+	 * This function is run when the robot is first started up and should be
+	 * used for any initialization code.
+	 */
+	public void robotInit() {
+		myRobot = new RobotDrive(0, 1, 2, 3);
+		stick = new Joystick(0);
+		myRobot.setInvertedMotor(MotorType.kFrontLeft, true);
+		myRobot.setInvertedMotor(MotorType.kFrontRight, true);
+		myRobot.setInvertedMotor(MotorType.kRearLeft, true);
+		myRobot.setInvertedMotor(MotorType.kRearRight, true);
+	}
 
-    /**
-     * This function is called periodically during autonomous
-     */
-    public void autonomousPeriodic() {
-    	if(autoLoopCounter < 100) //Check if we've completed 100 loops (approximately 2 seconds)
+	/**
+	 * This function is run once each time the robot enters autonomous mode
+	 */
+	public void autonomousInit() {
+		autoLoopCounter = 0;
+	}
+
+	/**
+	 * This function is called periodically during autonomous
+	 */
+	public void autonomousPeriodic() {
+		if (autoLoopCounter < 100) // Check if we've completed 100 loops
+									// (approximately 2 seconds)
 		{
-			myRobot.drive(-0.5, 0.0); 	// drive forwards half speed
+			myRobot.drive(-0.5, 0.0); // drive forwards half speed
 			autoLoopCounter++;
-			} else {
-			myRobot.drive(0.0, 0.0); 	// stop robot
+		} else {
+			myRobot.drive(0.0, 0.0); // stop robot
 		}
-    }
-    
-    /**
-     * This function is called periodically during operator control
-     */
-    public void teleopPeriodic() {
-        myRobot.tankDrive(stick, 1, stick, 4);
-    }
-    
-    /**
-     * This function is called periodically during test mode
-     */
-    public void testPeriodic() {
-    	LiveWindow.run();
-    }
-    
+	}
+
+	@Override
+	public void teleopInit() {
+		tank = SmartDashboard.getBoolean("Tank?", true);
+	}
+
+	/**
+	 * This function is called periodically during operator control
+	 */
+	public void teleopPeriodic() {
+		if (tank) {
+			myRobot.tankDrive(stick, 1, stick, 5);
+		} else {
+			myRobot.arcadeDrive(stick);
+		}
+	}
+
+	/**
+	 * This function is called periodically during test mode
+	 */
+	public void testPeriodic() {
+		LiveWindow.run();
+	}
+
 }
