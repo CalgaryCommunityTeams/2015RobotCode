@@ -3,7 +3,9 @@ package io.github.CalgaryCommunityTeams.y2015.robotCode;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,6 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 	RobotDrive myRobot;
+	SpeedController lifter;
 	Joystick stick;
 	int autoLoopCounter;
 	boolean tank;
@@ -26,6 +29,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void robotInit() {
 		myRobot = new RobotDrive(0, 1, 2, 3);
+		lifter = new Talon(4);
 		stick = new Joystick(0);
 		myRobot.setInvertedMotor(MotorType.kFrontLeft, true);
 		myRobot.setInvertedMotor(MotorType.kFrontRight, true);
@@ -63,11 +67,12 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		if (tank) {
+		if (tank) { //Driver can choose how they want to drive.
 			myRobot.tankDrive(stick, 1, stick, 5);
 		} else {
 			myRobot.arcadeDrive(stick);
 		}
+		lifter.set(stick.getRawAxis(2) - stick.getRawAxis(3));
 	}
 
 	/**
