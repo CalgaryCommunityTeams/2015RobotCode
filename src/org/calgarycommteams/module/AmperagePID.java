@@ -9,9 +9,9 @@ import edu.first.util.PowerUtils;
  *
  * @author Joel Gallant
  */
-public class VoltagePID extends PIDController {
+public class AmperagePID extends PIDController {
 
-    public VoltagePID(final int pdpPort, SpeedController output, double P) {
+    public AmperagePID(final int pdpPort, SpeedController output, double P) {
         super(new Input() {
             @Override
             public double get() {
