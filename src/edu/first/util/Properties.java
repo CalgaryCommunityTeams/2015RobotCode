@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.StringTokenizer;
 import edu.first.util.log.Logger;
-import java.util.logging.Level;
 
 /**
  * The class representation of files on the cRIO that contain "properties". This
@@ -145,6 +144,18 @@ public final class Properties {
     }
 
     /**
+     * Converts the {@link #getValue(java.lang.String)} value to a boolean.
+     *
+     * @param key string used to declare the property
+     * @return value given to the key in the file (returns false unless
+     * specifically "true")
+     * @throws NullPointerException when key does not exist
+     */
+    public boolean toBoolean(String key) {
+        return Boolean.parseBoolean(getValue(key));
+    }
+
+    /**
      * Returns the actual value designated in the file under the key.
      *
      * @param key string used to declare the property
@@ -187,6 +198,23 @@ public final class Properties {
     public double toDouble(String key, double backup) {
         try {
             return toDouble(key);
+        } catch (Exception ex) {
+            Logger.getLogger(getClass()).debug(key + " property not found - using " + backup);
+            return backup;
+        }
+    }
+
+    /**
+     * Converts the {@link #getValue(java.lang.String)} value to a boolean.
+     *
+     * @param key string used to declare the property
+     * @param backup value used if it did not exist in the file
+     * @return value given to the key in the file (returns false unless
+     * specifically "true")
+     */
+    public boolean toBoolean(String key, boolean backup) {
+        try {
+            return toBoolean(key);
         } catch (Exception ex) {
             Logger.getLogger(getClass()).debug(key + " property not found - using " + backup);
             return backup;
