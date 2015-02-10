@@ -6,7 +6,9 @@
 *.war
 *.ear
 
-bin/*
 /nbproject/private/
 /build/
 /dist/
+/bin/
+
+sysProps.xml
