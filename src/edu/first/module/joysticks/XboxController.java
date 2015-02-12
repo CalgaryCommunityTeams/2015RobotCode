@@ -57,7 +57,7 @@ public class XboxController extends BindingJoystick {
      * Port for axis.
      */
     public static final int LEFT_X = 0, LEFT_Y = 1, LEFT_TRIGGER = 2, RIGHT_TRIGGER = 3,
-            RIGHT_X = 4, RIGHT_Y = 5, RIGHT_FROM_MIDDLE = 6, LEFT_FROM_MIDDLE = 7;
+            RIGHT_X = 4, RIGHT_Y = 5, RIGHT_FROM_MIDDLE = 6, LEFT_FROM_MIDDLE = 7, TRIGGERS = 8;
 
     /**
      * Constructs the joystick with the {@link edu.wpi.first.wpilibj.Joystick}
@@ -68,9 +68,10 @@ public class XboxController extends BindingJoystick {
     protected XboxController(Joystick joystick) {
         super(joystick);
 
-        increaseAxisCapacity(2);
+        increaseAxisCapacity(3);
         setAxis(RIGHT_FROM_MIDDLE, new FromMiddle(getRightY(), getRightX()));
         setAxis(LEFT_FROM_MIDDLE, new FromMiddle(getLeftY(), getLeftX()));
+        setAxis(TRIGGERS, new Combination(getLeftTrigger(), getRightTrigger()));
         invertAxis(LEFT_Y);
         invertAxis(RIGHT_Y);
         invertAxis(LEFT_FROM_MIDDLE);
@@ -304,6 +305,32 @@ public class XboxController extends BindingJoystick {
      */
     public final Axis getRightDistanceFromMiddle() {
         return getRawAxis(RIGHT_FROM_MIDDLE);
+    }
+
+    /**
+     * Returns the triggers value.
+     *
+     * <p>
+     * Right: Positive; Left: Negative
+     *
+     * @return triggers together
+     */
+    public final double getTriggersValue() {
+        return getRawAxisValue(TRIGGERS);
+    }
+
+    /**
+     * Returns an {@link Axis} that will give values from the axis. Changed
+     * settings of the controller will not affect this object after it has
+     * already been created.
+     *
+     * <p>
+     * Right: Positive; Left: Negative
+     *
+     * @return axis object to receive input from
+     */
+    public final Axis getTriggers() {
+        return getRawAxis(TRIGGERS);
     }
 
     /**
@@ -551,6 +578,23 @@ public class XboxController extends BindingJoystick {
 
             double distance = Math.sqrt((x * x) + (y * y));
             return (y > 0) ? distance : -distance;
+        }
+    }
+
+    private static final class Combination implements Axis {
+
+        private final Axis left;
+        private final Axis right;
+
+        public Combination(Axis left, Axis right) {
+            this.left = left;
+            this.right = right;
+        }
+
+        @Override
+        public double get() {
+            // left is negative
+            return -left.get() + right.get();
         }
     }
 }

@@ -1,5 +1,6 @@
 package edu.first.main;
 
+import org.calgarycommteams.subsystems.Arm;
 import org.calgarycommteams.subsystems.Drive;
 import org.calgarycommteams.subsystems.Joysticks;
 
@@ -43,5 +44,5 @@ import org.calgarycommteams.subsystems.Joysticks;
  * @since May 07 13
  * @author Joel Gallant
  */
-public interface Constants extends Drive, Joysticks {
+public interface Constants extends Drive, Joysticks, Arm {
 }

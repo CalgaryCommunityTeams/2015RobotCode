@@ -2,8 +2,8 @@ package org.calgarycommteams.subsystems;
 
 import edu.first.module.Module;
 import edu.first.module.actuators.Drivetrain;
-import edu.first.module.actuators.VictorModule;
-import edu.first.module.actuators.VictorModuleGroup;
+import edu.first.module.actuators.TalonModule;
+import edu.first.module.actuators.TalonModuleGroup;
 import edu.first.module.subsystems.Subsystem;
 import org.calgarycommteams.settings.Ports;
 
@@ -13,13 +13,13 @@ import org.calgarycommteams.settings.Ports;
  */
 public interface Drive extends Ports {
 
-    VictorModuleGroup leftDrive = new VictorModuleGroup(new VictorModule[]{
-        new VictorModule(LEFT_DRIVE_1),
-        new VictorModule(LEFT_DRIVE_2)
+    TalonModuleGroup leftDrive = new TalonModuleGroup(new TalonModule[]{
+        new TalonModule(LEFT_DRIVE_1),
+        new TalonModule(LEFT_DRIVE_2)
     });
-    VictorModuleGroup rightDrive = new VictorModuleGroup(new VictorModule[]{
-        new VictorModule(RIGHT_DRIVE_1),
-        new VictorModule(RIGHT_DRIVE_2)
+    TalonModuleGroup rightDrive = new TalonModuleGroup(new TalonModule[]{
+        new TalonModule(RIGHT_DRIVE_1),
+        new TalonModule(RIGHT_DRIVE_2)
     });
     Drivetrain drivetrain = new Drivetrain(leftDrive, rightDrive);
     
