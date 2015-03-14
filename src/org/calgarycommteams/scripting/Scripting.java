@@ -20,7 +20,7 @@ public class Scripting {
 
 	private Scripting() {
 		ScriptEngineManager factory = new ScriptEngineManager();
-		engine = factory.getEngineByName("Javascript");
+		engine = factory.getEngineByName("JavaScript");
 		engineInv = (Invocable) engine;
 		engine.put("robot", new RobotInterface());
 	}
