@@ -23,6 +23,7 @@ public class Scripting {
 		engine = factory.getEngineByName("JavaScript");
 		engineInv = (Invocable) engine;
 		engine.put("robot", new RobotInterface());
+		engine.put("raw", new ConstantsInterface());
 	}
 
 	/**
