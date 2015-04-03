@@ -9,11 +9,13 @@ package org.calgarycommteams.scripting;
  * @author Daniel Doran
  */
 public class RobotInterface {
-	
-	RobotInterface() {
-		
-	}
-	
+
+	/**
+	 * Waits for so many milliseconds. 
+	 * 
+	 * @param time
+	 *            the number of milliseconds to wait
+	 */
 	public void sleep(long time) {
 		try {
 			Thread.sleep(time);
@@ -22,6 +24,6 @@ public class RobotInterface {
 			e.printStackTrace();
 		}
 	}
-	//TODO Functions called by the script to interact with the robot
+	// TODO Functions called by the script to interact with the robot
 
 }

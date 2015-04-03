@@ -1,7 +1,10 @@
 package org.calgarycommteams;
 
+import edu.first.identifiers.Function;
+import edu.first.identifiers.TransformedOutput;
 import edu.first.module.Module;
 import edu.first.module.joysticks.BindingJoystick;
+import edu.first.module.joysticks.BindingJoystick.DualAxisBind;
 import edu.first.module.subsystems.Subsystem;
 import edu.first.robot.IterativeRobotAdapter;
 
@@ -16,9 +19,7 @@ public class Robot extends IterativeRobotAdapter {
     });
     private final Subsystem AUTO_MODULES = new Subsystem(new Module[]{});
     private final Subsystem ALL_MODULES = new Subsystem(new Module[]{
-        TELEOP_MODULES, AUTO_MODULES,
-        // Modules that are turned on conditionally
-        armController
+        TELEOP_MODULES, AUTO_MODULES
     });
 
     public Robot() {
@@ -33,7 +34,6 @@ public class Robot extends IterativeRobotAdapter {
 
     @Override
     public void endDisabled() {
-        armController.setPID(LOADER_P.get(), LOADER_I.get(), LOADER_D.get());
     }
 
     private void addBinds() {
@@ -41,12 +41,17 @@ public class Robot extends IterativeRobotAdapter {
             driver.addAxisBind(drivetrain.getTank(
                     driver.getLeftDistanceFromMiddle(), driver.getLeftDistanceFromMiddle()));
         } else { // default is arcade
-            driver.addAxisBind(drivetrain.getArcade(
-                    driver.getLeftDistanceFromMiddle(), driver.getLeftX()));
+            driver.addAxisBind(new DualAxisBind(driver.getLeftDistanceFromMiddle(), driver.getRightX()) {
+				@Override
+				public void doBind(double axis1, double axis2) {
+					drivetrain.arcadeDrive(axis1, axis2, true);
+				}
+			});
         }
 
         BindingJoystick.AxisBind manualArmControl
-                = new BindingJoystick.AxisBind(operator.getTriggers(), armMotor);
+                = new BindingJoystick.AxisBind(operator.getTriggers(), 
+                		new TransformedOutput(armMotor, new Function.SquaredFunction()));
 
         operator.addBind(manualArmControl);
     }
@@ -61,7 +66,7 @@ public class Robot extends IterativeRobotAdapter {
         driver.doBinds();
         operator.doBinds();
     }
-
+    
     @Override
     public void endTeleoperated() {
         TELEOP_MODULES.disable();
