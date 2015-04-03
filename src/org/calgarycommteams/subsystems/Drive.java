@@ -1,10 +1,12 @@
 package org.calgarycommteams.subsystems;
 
+import edu.first.identifiers.InversedSpeedController;
 import edu.first.module.Module;
 import edu.first.module.actuators.Drivetrain;
 import edu.first.module.actuators.TalonModule;
 import edu.first.module.actuators.TalonModuleGroup;
 import edu.first.module.subsystems.Subsystem;
+
 import org.calgarycommteams.settings.Ports;
 
 /**
@@ -21,7 +23,7 @@ public interface Drive extends Ports {
         new TalonModule(RIGHT_DRIVE_1),
         new TalonModule(RIGHT_DRIVE_2)
     });
-    Drivetrain drivetrain = new Drivetrain(leftDrive, rightDrive);
+    Drivetrain drivetrain = new Drivetrain(leftDrive, new InversedSpeedController(rightDrive));
     
     Subsystem drive = new Subsystem(new Module[] {
         drivetrain,
