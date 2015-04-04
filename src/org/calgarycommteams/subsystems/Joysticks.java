@@ -11,9 +11,9 @@ import org.calgarycommteams.settings.Settings;
  */
 public interface Joysticks extends Settings {
 
-    XboxController driver = new XboxController(1, JOYSTICK_DEADBAND);
+    XboxController driver = new XboxController(0, JOYSTICK_DEADBAND);
     XboxController operator = SINGLE_DRIVER ? driver
-            : new XboxController(2, JOYSTICK_DEADBAND);
+            : new XboxController(1, JOYSTICK_DEADBAND);
 
     Subsystem joysticks = new Subsystem(new Module[]{
         driver, operator

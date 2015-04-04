@@ -13,12 +13,12 @@ public interface Ports {
 
     // BACKUPS
     // --- Drivetrain
-    int _leftDrive1 = 1,
-            _leftDrive2 = 2;
-    int _rightDrive1 = 3,
-            _rightDrive2 = 4;
+    int _leftDrive1 = 0,
+            _leftDrive2 = 1;
+    int _rightDrive1 = 2,
+            _rightDrive2 = 3;
     // --- Arm
-    int _armMotor = 5;
+    int _armMotor = 4;
     int _armPosition = 1;
     // VALUES
     // --- Drivetrain
