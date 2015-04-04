@@ -9,7 +9,7 @@ import java.io.File;
  */
 public interface Ports {
 
-    Properties portsFile = new Properties(new File("/home/ports.txt"));
+    Properties portsFile = new Properties(new File("/home/lvuser/ports.txt"));
 
     // BACKUPS
     // --- Drivetrain
@@ -19,7 +19,6 @@ public interface Ports {
             _rightDrive2 = 3;
     // --- Arm
     int _armMotor = 4;
-    int _armPosition = 1;
     // VALUES
     // --- Drivetrain
     int LEFT_DRIVE_1 = portsFile.toInt("LeftDrive1", _leftDrive1),
@@ -27,6 +26,5 @@ public interface Ports {
     int RIGHT_DRIVE_1 = portsFile.toInt("RightDrive1", _rightDrive1),
             RIGHT_DRIVE_2 = portsFile.toInt("RightDrive2", _rightDrive2);
     // --- Arm
-    int ARM_MOTOR = portsFile.toInt("ArmMotor", _armMotor),
-            ARM_POSITION = portsFile.toInt("ArmPosition", _armPosition);
+    int ARM_MOTOR = portsFile.toInt("ArmMotor", _armMotor);
 }

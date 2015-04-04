@@ -14,5 +14,5 @@ public interface Settings {
 
     double JOYSTICK_DEADBAND = settingsFile.toDouble("JOYSTICK_DEADBAND", 0.1);
     String DRIVING_FORMAT = settingsFile.getValue("DRIVING_FORMAT", "arcade");
-    boolean SINGLE_DRIVER = settingsFile.toBoolean("SINGLE_DRIVER", true);
+    boolean SINGLE_DRIVER = settingsFile.toBoolean("SINGLE_DRIVER", false);
 }
